@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Form from "./components/Form";
+import List from "./components/List";
 /* 
   클래스/함수 컴포넌트(용도별로 2가지 케이스)
   내용 출력 전용, 데이터 관리 용도
@@ -23,52 +25,6 @@ export default function App() {
   ]);
   const [todoValue, setTodoValue] = useState("");
 
-  const btnStyle = {
-    color: "#fff",
-    border: "none",
-    padding: "5px 9px",
-    borderRadius: "50%",
-    cursor: "pointer",
-    float: "right",
-  };
-
-  const getStyle = (completed) => {
-    return {
-      padding: "10px",
-      borderBottom: "1px #ccc dotted",
-      textDecoration: completed ? "line-through" : "none",
-    };
-  };
-
-  const deleteClick = (id) => {
-    // 클릭된 ID 와 다른 요소들만 걸러서 새로운 배열 생성
-    const newTodo = todoData.filter((item) => item.id !== id);
-    // console.log("클릭", newTodo);
-    setTodoData(newTodo);
-  };
-
-  const toggleClick = (id) => {
-    // map 을 통해서 todoData 의 complete 를 업데이트 해보자.
-    const updateTodo = todoData.map((item) => {
-      if (item.id === id) {
-        // if (item.id === true) {
-        //   item.completed = false;
-        // } else {
-        //   item.completed = true;
-        // }
-        item.completed = !item.completed;
-      }
-
-      return item;
-    });
-    setTodoData(updateTodo);
-  };
-
-  const changeTodoValue = (event) => {
-    // console.log(event.target.value);
-    setTodoValue(event.target.value);
-  };
-
   const addTodoSubmit = (event) => {
     // 웹브라우저 새로 고침을 하면 안되므로 막아줌
     event.preventDefault();
@@ -90,40 +46,18 @@ export default function App() {
   };
 
   return (
-    <div className="container">
-      <div className="todoBlock">
-        <div className="title">
+    <div className="flex items-center justify-center w-screen h-screen bg-blue-300">
+      <div className="w-full p-6 m-4 bg-white rounded shadow lg:w-3/4 lg:max-w-5xl">
+        <div className="flex justify-between mb-3">
           <h1>할일 목록</h1>
         </div>
 
-        {todoData.map((item) => (
-          // item = { id: 1, title: "할일 1", completed: false },
-          // item = { id: 2, title: "할일 2", completed: true },
-          // item = { id: 3, title: "할일 3", completed: false },
-          // item = { id: 4, title: "할일 4", completed: false },
-          <div style={getStyle(item.completed)} key={item.id}>
-            <input
-              type="checkbox"
-              defaultChecked={item.completed}
-              onChange={() => toggleClick(item.id)}
-            />
-            {item.title}
-            <button style={btnStyle} onClick={() => deleteClick(item.id)}>
-              x
-            </button>
-          </div>
-        ))}
-
-        <form style={{ display: "flex" }} onSubmit={addTodoSubmit}>
-          <input
-            style={{ flex: "10" }}
-            type="text"
-            placeholder="할일을 입력하세요."
-            value={todoValue}
-            onChange={changeTodoValue}
-          />
-          <input style={{ flex: "1" }} type="submit" />
-        </form>
+        <List todoData={todoData} setTodoData={setTodoData} />
+        <Form
+          todoValue={todoValue}
+          setTodoValue={setTodoValue}
+          addTodoSubmit={addTodoSubmit}
+        />
       </div>
     </div>
   );
