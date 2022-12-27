@@ -88,7 +88,7 @@ export default class App extends Component {
     };
     // 새로운 할일을 일단 복사하고, 복사된 배열에 추가하여서 업데이트
     // 기존 할일을 Destructuring 하여서 복사본 만듦
-    // todoData: [{},{},{},{},    {}]     [{}]
+    // todoData: [{},{},{},{},    {}]          [{}]
     this.setState({ todoData: [...this.state.todoData, addTodo] });
     // 새로운 할일을 추가했으므로 내용 입력창의 글자를 초기화
     this.setState({ todoValue: "" });
