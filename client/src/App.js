@@ -75,15 +75,22 @@ export default class App extends Component {
   };
 
   addTodoSubmit = (event) => {
+    // 웹브라우저 새로 고침을 하면 안되므로 막아줌
     event.preventDefault();
     // { id: 4, title: "할일 4", completed: false }
+    // todoData 는 배열이고 배열의 요소들은 위처럼 구성해야 하니까
+    // 객체{}로 만들어줌
+    // 그래야 .map 을 통해서 규칙적인 jsx 를 리턴할 수 있으니까
     const addTodo = {
-      id: Date.now(),
-      title: this.state.todoValue,
-      completed: false,
+      id: Date.now(), // id 값은 배열.map 의 key 로 활용 예정, unique 값 만들기위해
+      title: this.state.todoValue, // 할일 입력창의 내용을 추가
+      completed: false, // 할일이 추가될 때 아직 완료한 것은 아니므로 false 초기화
     };
+    // 새로운 할일을 일단 복사하고, 복사된 배열에 추가하여서 업데이트
+    // 기존 할일을 Destructuring 하여서 복사본 만듦
     // todoData: [{},{},{},{},    {}]     [{}]
     this.setState({ todoData: [...this.state.todoData, addTodo] });
+    // 새로운 할일을 추가했으므로 내용 입력창의 글자를 초기화
     this.setState({ todoValue: "" });
   };
 
