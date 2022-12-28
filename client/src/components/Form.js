@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useCallback } from "react";
 
-const Form = ({ todoValue, setTodoValue, addTodoSubmit }) => {
-  const changeTodoValue = (event) => {
-    // console.log(event.target.value);
-    setTodoValue(event.target.value);
-  };
+const Form = React.memo(({ todoValue, setTodoValue, addTodoSubmit }) => {
+  // console.log("Form Rendering...");
+
+  const changeTodoValue = useCallback(
+    (event) => {
+      // console.log(event.target.value);
+      setTodoValue(event.target.value);
+    },
+    [setTodoValue]
+  );
 
   return (
     <div>
@@ -24,6 +29,6 @@ const Form = ({ todoValue, setTodoValue, addTodoSubmit }) => {
       </form>
     </div>
   );
-};
+});
 
 export default Form;
