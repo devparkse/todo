@@ -38,11 +38,22 @@ const ListItem = React.memo(({ item, todoData, setTodoData, deleteClick }) => {
       return item;
     });
     setTodoData(updateTodo);
+    // 로컬에 저장(DB 저장 예정)
+    localStorage.setItem("todoData", JSON.stringify(updateTodo));
   };
 
   // 현재 item.id 에 해당하는 것만 업데이트 한다.
   const todoId = item.id;
   const updateTitle = () => {
+    // 공백 문자열 제거 추가
+    let str = editedTitle;
+    str = str.replace(/^\s+|\s+$/gm, "");
+    if (str.length === 0) {
+      alert("제목을 입력하세요.");
+      setEditedTitle(item.title);
+      return;
+    }
+
     let tempTodo = todoData.map((item) => {
       // 모든 todoData 중에 현재 ID 와 같다면
       if (item.id === todoId) {
@@ -54,6 +65,8 @@ const ListItem = React.memo(({ item, todoData, setTodoData, deleteClick }) => {
 
     // 데이터 갱신
     setTodoData(tempTodo);
+    // 로컬에 저장(DB 저장 예정)
+    localStorage.setItem("todoData", JSON.stringify(tempTodo));
     // 목록창으로 이동
     setIsEditing(false);
   };
